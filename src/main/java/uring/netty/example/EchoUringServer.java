@@ -8,7 +8,7 @@ import io.netty.incubator.channel.uring.IOUringServerSocketChannel;
 
 public class EchoUringServer {
 
-    private static int PORT = 2022;
+    private static final int PORT = 2022;
 
     @ChannelHandler.Sharable
     public static class EchoServerHandler extends ChannelInboundHandlerAdapter {
