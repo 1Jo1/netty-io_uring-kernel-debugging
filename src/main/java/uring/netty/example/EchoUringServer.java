@@ -1,6 +1,7 @@
 package uring.netty.example;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.incubator.channel.uring.IOUringEventLoopGroup;
@@ -16,6 +17,7 @@ public class EchoUringServer {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) {
             ctx.write(msg);
+	    ((ByteBuf) msg).release();
         }
 
         @Override
