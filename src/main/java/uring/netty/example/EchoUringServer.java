@@ -17,7 +17,6 @@ public class EchoUringServer {
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) {
             ctx.write(msg);
-	    ((ByteBuf) msg).release();
         }
 
         @Override
