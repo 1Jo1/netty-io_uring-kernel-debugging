@@ -48,45 +48,14 @@ public class EchoUringServer {
 	}
 
 	public static void main(String[] args) {
-		// EventLoopGroup workerGroup = new IOUringEventLoopGroup(1);
-		// EventLoopGroup bossGroup = new IOUringEventLoopGroup(1);
-		// final EchoServerHandler serverHandler = new EchoServerHandler();
-		// try {
-		// ServerBootstrap b = new ServerBootstrap();
-		// b.group(bossGroup, workerGroup)
-		// .option(ChannelOption.SO_REUSEADDR, true)
-		// .channel(IOUringServerSocketChannel.class)
-		// .childHandler(new ChannelInitializer<SocketChannel>() {
-		// @Override
-		// public void initChannel(SocketChannel ch) throws Exception {
-		// ChannelPipeline p = ch.pipeline();
-		// //p.addLast(new LoggingHandler(LogLevel.INFO));
-		// p.addLast(serverHandler);
-		// }
-		// });
-		//
-		// // Start the server.
-		// ChannelFuture f = b.bind(PORT).sync();
-		//
-		// // Wait until the server socket is closed.
-		// f.channel().closeFuture().sync();
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// } finally {
-		// // Shut down all event loops to terminate all threads.
-		// bossGroup.shutdownGracefully();
-		// workerGroup.shutdownGracefully();
-		// }
-		//
-
-		EventLoopGroup bossGroup = new NioEventLoopGroup(1);
-		EventLoopGroup workerGroup = new NioEventLoopGroup(1);
+		EventLoopGroup workerGroup = new IOUringEventLoopGroup(1);
+		EventLoopGroup bossGroup = new IOUringEventLoopGroup(1);
 		final EchoServerHandler serverHandler = new EchoServerHandler();
 		try {
 			ServerBootstrap b = new ServerBootstrap();
 			b.group(bossGroup, workerGroup)
 					.option(ChannelOption.SO_REUSEADDR, true)
-					.channel(NioServerSocketChannel.class)
+					.channel(IOUringServerSocketChannel.class)
 					.childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						public void initChannel(SocketChannel ch) throws Exception {
@@ -108,6 +77,38 @@ public class EchoUringServer {
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
+
 	}
+	//
+	// EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+	// EventLoopGroup workerGroup = new NioEventLoopGroup(1);
+	// final EchoServerHandler serverHandler = new EchoServerHandler();
+	// try {
+	// ServerBootstrap b = new ServerBootstrap();
+	// b.group(bossGroup, workerGroup)
+	// .option(ChannelOption.SO_REUSEADDR, true)
+	// .channel(NioServerSocketChannel.class)
+	// .childHandler(new ChannelInitializer<SocketChannel>() {
+	// @Override
+	// public void initChannel(SocketChannel ch) throws Exception {
+	// ChannelPipeline p = ch.pipeline();
+	// // p.addLast(new LoggingHandler(LogLevel.INFO));
+	// p.addLast(serverHandler);
+	// }
+	// });
+	//
+	// // Start the server.
+	// ChannelFuture f = b.bind(PORT).sync();
+	//
+	// // Wait until the server socket is closed.
+	// f.channel().closeFuture().sync();
+	// } catch (InterruptedException e) {
+	// e.printStackTrace();
+	// } finally {
+	// // Shut down all event loops to terminate all threads.
+	// bossGroup.shutdownGracefully();
+	// workerGroup.shutdownGracefully();
+	// }
+	// }
 
 }
